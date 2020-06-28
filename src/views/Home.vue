@@ -1,10 +1,16 @@
 <template>
   <div class="home">
     <div class="header">
-      <div class="address_map">
+      <div class="address_map" @click="$router.push('/address')">
         <i class="fa fa-map-marker"></i>
         <span>{{ address }}</span>
         <i class="fa fa-sort-desc"></i>
+      </div>
+      <div class="search_wrap">
+        <div class="shop_search">
+          <i class="fa fa-search"></i>
+          搜索商家 商家名称
+        </div>
       </div>
     </div>
   </div>
@@ -15,13 +21,13 @@ export default {
   name: "home",
   computed: {
     address() {
-      return this.$store.getters.address
+      return this.$store.getters.address || "广州市天河区珠江新城888号"
     },
   },
 }
 </script>
 
-<style>
+<style scoped>
 .home {
   width: 100%;
   height: 100%;
@@ -54,5 +60,21 @@ export default {
 .fa-sort-desc {
   position: relative;
   top: -3px;
+}
+
+.search_wrap .shop_search {
+  /* margin-top: 10px; */
+  background-color: #fff;
+  padding: 10px 0;
+  border-radius: 4px;
+  text-align: center;
+  color: #aaa;
+}
+
+.search_wrap {
+  position: sticky;
+  top: 0px;
+  z-index: 999;
+  box-sizing: border-box;
 }
 </style>
