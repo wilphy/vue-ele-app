@@ -3,7 +3,7 @@
     <addr-header :isLeft="true" title="选择收货地址"></addr-header>
     <div class="city_search">
       <div class="search">
-        <span class="city">
+        <span class="city" @click="$router.push('/city')">
           {{ city }}
           <i class="fa fa-angle-down"></i>
         </span>
@@ -14,7 +14,7 @@
           placeholder="小区/写字楼/学校等"
         />
       </div>
-      <location :address="address"></location>
+      <location @click="selectAddress" :address="address"></location>
     </div>
 
     <div class="area">

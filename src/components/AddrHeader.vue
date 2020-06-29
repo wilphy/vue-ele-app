@@ -3,7 +3,7 @@
     <!-- 左侧返回 -->
     <div class="header-button is-left" v-show="isLeft">
       <i class="fa fa-chevron-left"></i>
-      <button @click="$router.go(-1)">返回</button>
+      <button @click="$router.push('/')">返回</button>
     </div>
     <!-- 中间标题 -->
     <h1 class="header-title">{{ title }}</h1>
