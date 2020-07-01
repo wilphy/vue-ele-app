@@ -13,16 +13,67 @@
         搜索商家 商家名称
       </div>
     </div>
-    <div id="container" style="height: 2000px"></div>
+
+    <div id="container">
+      <!-- 轮播 -->
+      <mt-swipe :auto="4000" class="swiper">
+        <mt-swipe-item v-for="(img, index) in swipeImgs" :key="index">
+          <img :src="img" alt />
+        </mt-swipe-item>
+      </mt-swipe>
+
+      <!-- 分类 -->
+      <mt-swipe :auto="0" class="entries">
+        <mt-swipe-item
+          v-for="(entry, i) in entries"
+          :key="i"
+          class="entry-wrap"
+        >
+          <div class="foodentry" v-for="(item, index) in entry" :key="index">
+            <div class="img-wrap">
+              <img :src="item.image" alt />
+            </div>
+            <span>{{ item.name }}</span>
+          </div>
+        </mt-swipe-item>
+      </mt-swipe>
+    </div>
   </div>
 </template>
 
 <script>
+import { Swipe, SwipeItem } from "mint-ui"
+
 export default {
   name: "home",
+  data() {
+    return {
+      swipeImgs: [], // 轮播图
+      entries: [], // 分类
+    }
+  },
   computed: {
     address() {
       return this.$store.getters.address || "获取定位中..."
+    },
+    city() {
+      return (
+        this.$store.getters.location.addressComponent.city ||
+        this.$store.getters.location.addressComponent.province
+      )
+    },
+  },
+  created() {
+    this.getShoppingData()
+  },
+  methods: {
+    getShoppingData() {
+      //   "/api/profile/shopping"
+      this.$axios("/data/profile/shopping.json").then((res) => {
+        // console.log(res.data)
+        this.swipeImgs = res.data.swipeImgs
+        this.entries = res.data.entries
+      })
     },
   },
 }
@@ -73,11 +124,48 @@ export default {
   text-align: center;
   color: #aaa;
 }
-
 .search-wrap {
   position: sticky;
   top: 0px;
   z-index: 999;
   box-sizing: border-box;
+}
+
+/* 轮播 */
+.swiper {
+  height: 100px;
+}
+.swiper img {
+  width: 100%;
+  height: 100px;
+}
+
+/* 分类 */
+.entries {
+  background: #fff;
+  height: 47.2vw;
+  text-align: center;
+  overflow: hidden;
+}
+.foodentry {
+  width: 20%;
+  float: left;
+  position: relative;
+  margin-top: 2.933333vw;
+}
+.foodentry .img-wrap {
+  position: relative;
+  display: inline-block;
+  width: 12vw;
+  height: 12vw;
+}
+.img-wrap img {
+  width: 100%;
+  height: 100%;
+}
+.foodentry span {
+  display: block;
+  color: #666;
+  font-size: 0.32rem;
 }
 </style>
