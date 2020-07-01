@@ -5,9 +5,7 @@
         <i class="fa fa-search"></i>
         <input v-model="city_val" type="text" placeholder="输入城市名" />
       </div>
-      <button
-        @click="$router.push({ name: 'address', params: { city: city } })"
-      >
+      <button @click="$router.push('/address')">
         取消
       </button>
     </div>
@@ -66,9 +64,12 @@ export default {
   },
   methods: {
     getCityInfo() {
-      this.$axios
-        .get("/api/posts/cities")
+      // "/api/posts/cities"
+      // "https://www.easy-mock.com/mock/5efc96c874d5f72a9ffe2ba2/api/cities" easy-mock地址
+      // "data/city.json" 本地静态json
+      this.$axios("data/city.json")
         .then((res) => {
+          // console.log(res)
           this.cityInfo = res.data
 
           // 处理key 计算key

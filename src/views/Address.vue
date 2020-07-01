@@ -48,7 +48,7 @@ export default {
     address() {
       return (
         this.$store.getters.location.formattedAddress ||
-        "广州市天河区珠江新城888号"
+        "获取定位中..."
       )
     },
   },

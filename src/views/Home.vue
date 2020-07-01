@@ -1,18 +1,19 @@
 <template>
   <div class="home">
     <div class="header">
-      <div class="address_map" @click="$router.push('/address')">
+      <div class="address-map" @click="$router.push('/address')">
         <i class="fa fa-map-marker"></i>
         <span>{{ address }}</span>
         <i class="fa fa-sort-desc"></i>
       </div>
-      <div class="search_wrap">
-        <div class="shop_search">
-          <i class="fa fa-search"></i>
-          搜索商家 商家名称
-        </div>
+    </div>
+    <div class="search-wrap">
+      <div class="shop-search">
+        <i class="fa fa-search"></i>
+        搜索商家 商家名称
       </div>
     </div>
+    <div id="container" style="height: 2000px"></div>
   </div>
 </template>
 
@@ -21,7 +22,7 @@ export default {
   name: "home",
   computed: {
     address() {
-      return this.$store.getters.address || "广州市天河区珠江新城888号"
+      return this.$store.getters.address || "获取定位中..."
     },
   },
 }
@@ -35,19 +36,21 @@ export default {
   box-sizing: border-box;
 }
 .header,
-.search_wrap {
+.search-wrap {
   background-color: #009eef;
   padding: 10px 16px;
 }
-.header .address_map {
+.header .address-map {
   color: #fff;
-  font-weight: bold;
+  /* font-weight: bold; */
+  font-size: 16px;
+  padding: 5px 0;
 }
-.address_map i {
+.address-map i {
   margin: 0 3px;
   font-size: 18px;
 }
-.address_map span {
+.address-map span {
   display: inline-block;
   width: 80%;
   overflow: hidden;
@@ -59,10 +62,10 @@ export default {
 }
 .fa-sort-desc {
   position: relative;
-  top: -3px;
+  top: -4px;
 }
 
-.search_wrap .shop_search {
+.search-wrap .shop-search {
   /* margin-top: 10px; */
   background-color: #fff;
   padding: 10px 0;
@@ -71,7 +74,7 @@ export default {
   color: #aaa;
 }
 
-.search_wrap {
+.search-wrap {
   position: sticky;
   top: 0px;
   z-index: 999;
