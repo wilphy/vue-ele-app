@@ -39,7 +39,7 @@ export default {
         // 非精准定位
         function onError(data) {
           // 定位出错
-          // console.log(data)
+          console.log("非精准定位：" + data)
           self.getLngLatLocation()
         }
       })
@@ -69,7 +69,7 @@ export default {
               geocoder.getAddress(lnglat, function(status, data) {
                 if (status === "complete" && data.info === "OK") {
                   // result为对应的地理位置详细信息
-                  console.log(data)
+                  console.log("IP定位：" + data)
                   self.$store.dispatch("setLocation", {
                     addressComponent: {
                       city: result.city,

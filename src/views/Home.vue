@@ -7,7 +7,7 @@
         <i class="fa fa-sort-desc"></i>
       </div>
     </div>
-    <div class="search-wrap">
+    <div class="search-wrap" :class="{ fixedview: showFilter }">
       <div class="shop-search">
         <i class="fa fa-search"></i>
         搜索商家 商家名称
@@ -38,18 +38,32 @@
         </mt-swipe-item>
       </mt-swipe>
     </div>
+
+    <!-- 推荐商家 -->
+    <div class="shoplist-title">
+      <span>—</span><span>推荐商家</span><span>—</span>
+    </div>
+
+    <!-- 导航 -->
+    <FilterView :filterData="filterData" @searchFixed="showFilterView" />
   </div>
 </template>
 
 <script>
 import { Swipe, SwipeItem } from "mint-ui"
+import FilterView from "../components/FilterView"
 
 export default {
   name: "home",
+  components: {
+    FilterView,
+  },
   data() {
     return {
       swipeImgs: [], // 轮播图
       entries: [], // 分类
+      filterData: null, //
+      showFilter: false,
     }
   },
   computed: {
@@ -74,6 +88,17 @@ export default {
         this.swipeImgs = res.data.swipeImgs
         this.entries = res.data.entries
       })
+
+      //   "/api/profile/filter"
+      this.$axios("/data/profile/filter.json").then((res) => {
+        console.log(res.data.filterData)
+        this.filterData = res.data
+      })
+    },
+
+    // 显示帅选项
+    showFilterView(isShow) {
+      this.showFilter = isShow
     },
   },
 }
@@ -167,5 +192,27 @@ export default {
   display: block;
   color: #666;
   font-size: 0.32rem;
+}
+
+/* 推荐商家 */
+.shoplist-title {
+  display: flex;
+  align-items: flex;
+  justify-content: center;
+  height: 9.6vw;
+  line-height: 9.6vw;
+  font-size: 16px;
+  color: #666;
+  background: #fff;
+}
+.shoplist-title span {
+  margin: 0 10px;
+}
+
+.fixedview {
+  width: 100%;
+  position: fixed;
+  top: 0px;
+  z-index: 999;
 }
 </style>
