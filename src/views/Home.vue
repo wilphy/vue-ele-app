@@ -45,13 +45,17 @@
     </div>
 
     <!-- 导航 -->
-    <FilterView :filterData="filterData" @searchFixed="showFilterView" />
+    <FilterView
+      :filterData="filterData"
+      @searchFixed="showFilterView"
+      @update="update"
+    />
   </div>
 </template>
 
 <script>
-import { Swipe, SwipeItem } from "mint-ui"
-import FilterView from "../components/FilterView"
+import { Swipe, SwipeItem } from "mint-ui";
+import FilterView from "../components/FilterView";
 
 export default {
   name: "home",
@@ -64,44 +68,49 @@ export default {
       entries: [], // 分类
       filterData: null, //
       showFilter: false,
-    }
+    };
   },
   computed: {
     address() {
-      return this.$store.getters.address || "获取定位中..."
+      return this.$store.getters.address || "获取定位中...";
     },
     city() {
       return (
         this.$store.getters.location.addressComponent.city ||
         this.$store.getters.location.addressComponent.province
-      )
+      );
     },
   },
   created() {
-    this.getShoppingData()
+    this.getShoppingData();
   },
   methods: {
     getShoppingData() {
       //   "/api/profile/shopping"
       this.$axios("/data/profile/shopping.json").then((res) => {
         // console.log(res.data)
-        this.swipeImgs = res.data.swipeImgs
-        this.entries = res.data.entries
-      })
+        this.swipeImgs = res.data.swipeImgs;
+        this.entries = res.data.entries;
+      });
 
       //   "/api/profile/filter"
       this.$axios("/data/profile/filter.json").then((res) => {
-        console.log(res.data.filterData)
-        this.filterData = res.data
-      })
+        console.log(res.data);
+        this.filterData = res.data;
+      });
     },
 
     // 显示帅选项
     showFilterView(isShow) {
-      this.showFilter = isShow
+      this.showFilter = isShow;
+    },
+
+    // 更新数据
+    update(condition) {
+      console.log(condition);
     },
   },
-}
+};
 </script>
 
 <style scoped>
